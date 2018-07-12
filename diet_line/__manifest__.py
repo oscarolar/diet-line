@@ -7,12 +7,19 @@
     'category': 'Hidden',
     'summary': 'Diet Line App for customizations',
     'depends': [
+        # Main Apps
         'crm',
         'account_invoicing',
         'account_accountant',
         'website',
         'mass_mailing',
         'marketing_automation',
+        # Secondary Modules
+        'account_cash_basis_base_account',
+        'l10n_mx',
+        'l10n_mx_edi',
+        'l10n_mx_edi_payment',
+        'l10n_mx_edi_payment',
     ],
     'data': [
     ],
