@@ -1,0 +1,4 @@
+[submodule "fb_connector"]
+	path = fb_connector
+	url = git@github.com:Vauxoo/fb-connector.git
+	branch = 11.0
