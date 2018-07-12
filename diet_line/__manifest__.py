@@ -21,7 +21,6 @@
         'l10n_mx_edi_payment',
         'l10n_mx_edi_payment',
         # Modules from Facebook connector branch
-        'crm_facebook_leads',
     ],
     'data': [
     ],
