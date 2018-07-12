@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Diet Line App',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     "author": "Vauxoo",
     "license": "LGPL-3",
     'category': 'Hidden',
@@ -20,6 +20,8 @@
         'l10n_mx_edi',
         'l10n_mx_edi_payment',
         'l10n_mx_edi_payment',
+        # Modules from Facebook connector branch
+        'crm_facebook_leads',
     ],
     'data': [
     ],
