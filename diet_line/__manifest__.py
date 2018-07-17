@@ -22,6 +22,7 @@
         'l10n_mx_edi_payment',
     ],
     'data': [
+        'views/crm_lead_view.xml'
     ],
     'demo': [
     ],

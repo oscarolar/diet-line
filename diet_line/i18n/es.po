@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* diet_line
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-17 05:59+0000\n"
+"PO-Revision-Date: 2018-07-17 05:59+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_interested
+msgid "Interested"
+msgstr "Interesado"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_ketosis_specialist
+msgid "Ketosis Specialist"
+msgstr "Especialista en Cetosis"
+
+#. module: diet_line
+#: model:ir.model,name:diet_line.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Iniciativa/Oportunidad"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_specialist_type
+msgid "Specialist Type"
+msgstr "Tipo de Especialista"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_visited_specialist
+msgid "Visited Specialist"
+msgstr "Visitó Especialista"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_weight_to_lower
+msgid "Weight To Lower"
+msgstr "Kilos a Bajar"
+

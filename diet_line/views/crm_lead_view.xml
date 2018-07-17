@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="crm_case_form_view_leads" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_facebook_leads.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="facebook_info"]' position='after'>
+                <group name="survey_info" string="Survey Info">
+                    <field name="ketosis_specialist"/>
+                    <field name="specialist_type"/>
+                    <field name="weight_to_lower"/>
+                    <field name="interested"/>
+                    <field name="visited_specialist"/>
+                    <field name="zip"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_facebook_leads.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="facebook_info"]' position='after'>
+                <group name="survey_info" string="Survey Info">
+                    <field name="ketosis_specialist"/>
+                    <field name="specialist_type"/>
+                    <field name="weight_to_lower"/>
+                    <field name="interested"/>
+                    <field name="visited_specialist"/>
+                    <field name="zip"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
