@@ -11,6 +11,7 @@ class CrmLead(models.Model):
     interested = fields.Char()
     visited_specialist = fields.Char()
     zip = fields.Char()
+    gender = fields.Char()
 
     def lead_creation(self, lead, form):
         lead_id = super(CrmLead, self).lead_creation(lead, form)

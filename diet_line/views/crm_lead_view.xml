@@ -14,6 +14,7 @@
                     <field name="interested"/>
                     <field name="visited_specialist"/>
                     <field name="zip"/>
+                    <field name="gender"/>
                 </group>
             </xpath>
         </field>
@@ -32,6 +33,7 @@
                     <field name="interested"/>
                     <field name="visited_specialist"/>
                     <field name="zip"/>
+                    <field name="gender"/>
                 </group>
             </xpath>
         </field>

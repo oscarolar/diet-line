@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 05:59+0000\n"
-"PO-Revision-Date: 2018-07-17 05:59+0000\n"
+"POT-Creation-Date: 2018-07-17 19:11+0000\n"
+"PO-Revision-Date: 2018-07-17 19:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: diet_line
+#: model:ir.model.fields,field_description:diet_line.field_crm_lead_gender
+msgid "Gender"
+msgstr "Género"
 
 #. module: diet_line
 #: model:ir.model.fields,field_description:diet_line.field_crm_lead_interested
@@ -34,6 +39,12 @@ msgstr "Iniciativa/Oportunidad"
 #: model:ir.model.fields,field_description:diet_line.field_crm_lead_specialist_type
 msgid "Specialist Type"
 msgstr "Tipo de Especialista"
+
+#. module: diet_line
+#: model:ir.ui.view,arch_db:diet_line.crm_case_form_view_leads
+#: model:ir.ui.view,arch_db:diet_line.crm_case_form_view_oppor
+msgid "Survey Info"
+msgstr "Información de Entrevista"
 
 #. module: diet_line
 #: model:ir.model.fields,field_description:diet_line.field_crm_lead_visited_specialist
