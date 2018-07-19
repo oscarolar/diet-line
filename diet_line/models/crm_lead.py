@@ -15,6 +15,11 @@ class CrmLead(models.Model):
 
     def lead_creation(self, lead, form):
         lead_id = super(CrmLead, self).lead_creation(lead, form)
-        lead_id.handle_partner_assignation()
-        self.env.cr.commit()
+        if not lead_id:
+            return lead_id
+        try:
+            lead_id.handle_partner_assignation()
+            self.env.cr.commit()
+        except Exception:
+            self.env.cr.rollback()
         return lead_id
