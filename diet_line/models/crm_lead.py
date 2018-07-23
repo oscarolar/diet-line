@@ -41,10 +41,6 @@ class CrmLead(models.Model):
 
         lead_id.partner_id = partner_id
 
-        try:
-            self.env.cr.commit()
-        except Exception:
-            self.env.cr.rollback()
         return lead_id
 
     def get_opportunity_name(self, vals, lead, form):
