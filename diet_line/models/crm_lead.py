@@ -34,3 +34,10 @@ class CrmLead(models.Model):
         except Exception:
             self.env.cr.rollback()
         return lead_id
+
+    def get_opportunity_name(self, vals, lead, form):
+        if lead.get('full_name'):
+            name = lead['full_name']
+        else:
+            name = super(CrmLead, self).get_opportunity_name(vals, lead, form)
+        return name
