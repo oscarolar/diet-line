@@ -28,8 +28,20 @@ class CrmLead(models.Model):
         lead_id = super(CrmLead, self).lead_creation(lead, form)
         if not lead_id:
             return lead_id
+
+        partner_obj = self.env['res.partner']
+        partner_id = partner_obj.search(
+            [('facebook_lead_id', '=', lead.get('id'))], limit=1)
+
+        if not partner_id:
+            partner_ids = lead_id.handle_partner_assignation()
+            partner_id = partner_ids.get(lead_id.id)
+            partner_id = partner_obj.browse(partner_id)
+            partner_id.facebook_lead_id = lead_id.facebook_lead_id
+
+        lead_id.partner_id = partner_id
+
         try:
-            lead_id.handle_partner_assignation()
             self.env.cr.commit()
         except Exception:
             self.env.cr.rollback()
