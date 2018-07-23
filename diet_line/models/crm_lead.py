@@ -2,6 +2,17 @@
 from odoo import fields, models
 
 
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    facebook_lead_id = fields.Char(readonly=True, copy=False)
+
+    _sql_constraints = [
+        ('facebook_lead_unique', 'unique(facebook_lead_id)',
+         'A partner already exists with that Facebook Lead ID!')
+    ]
+
+
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
