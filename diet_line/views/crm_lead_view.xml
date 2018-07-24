@@ -9,6 +9,7 @@
             <xpath expr='//field[@name="partner_id"]' position='after'>
                 <field name="phone"/>
                 <field name="facebook_form_id"/>
+                <field name="facebook_date_create"/>
             </xpath>
         </field>
     </record>
