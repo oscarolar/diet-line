@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
@@ -11,6 +12,66 @@ class ResPartner(models.Model):
         ('facebook_lead_unique', 'unique(facebook_lead_id)',
          'A partner already exists with that Facebook Lead ID!')
     ]
+
+
+class CrmTeam(models.Model):
+    _inherit = 'crm.team'
+
+    assign_method = fields.Selection([
+        ('manual', 'Manually'),
+        ('randomly', 'Randomly'),
+        ('balanced', 'Balanced')], string='Assignation Method',
+        default='manual', required=False,
+        help='Automatic assignation method for new leads:\n'
+             '\tManually: manual\n'
+             '\tRandomly: randomly but everyone gets the same amount\n'
+             '\tBalanced: to the person with the least amount of open leads')
+
+    @api.constrains('assign_method', 'member_ids')
+    def _check_member_assignation(self):
+        if not self.member_ids and self.assign_method != 'manual':
+            raise ValidationError(_("You must have team members assigned to"
+                                    " change the assignation method."))
+
+    @api.onchange('member_ids')
+    def _onchange_member_ids(self):
+        if not self.member_ids:
+            self.assign_method = 'manual'
+
+    @api.multi
+    def get_new_user(self):
+        self.ensure_one()
+        new_user = self.env['res.users']
+        member_ids = sorted(self.member_ids.ids)
+        if not member_ids:
+            return new_user
+        if self.assign_method == 'randomly':
+            # randomly means new leads get uniformly distributed
+            previous_assigned_user = self.env['crm.lead'].search([
+                ('team_id', '=', self.id)],
+                order='create_date desc', limit=1).user_id
+            # handle the case where the previous_assigned_user has left the
+            # team (or there is none).
+            if previous_assigned_user and \
+                    previous_assigned_user.id in member_ids:
+                previous_index = member_ids.index(
+                    previous_assigned_user.id)
+                new_user = new_user.browse(
+                    member_ids[(previous_index + 1) % len(member_ids)])
+            else:
+                new_user = new_user.browse(member_ids[0])
+        elif self.assign_method == 'balanced':
+            read_group_res = self.env['crm.lead'].read_group(
+                ['|', ('active', '=', True), ('active', '=', False),
+                    ('user_id', 'in', member_ids)], ['user_id'], ['user_id'])
+            # add all the members in case a member has no leads
+            # (and thus doesn't appear in the previous read_group)
+            count_dict = dict((m_id, 0) for m_id in member_ids)
+            count_dict.update(
+                (data['user_id'][0], data['user_id_count'])
+                for data in read_group_res)
+            new_user = new_user.browse(min(count_dict, key=count_dict.get))
+        return new_user
 
 
 class CrmLead(models.Model):
@@ -29,6 +90,7 @@ class CrmLead(models.Model):
         if not lead_id:
             return lead_id
 
+        # Partner assignment/creation
         partner_obj = self.env['res.partner']
         partner_id = partner_obj.search(
             [('facebook_lead_id', '=', lead.get('id'))], limit=1)
@@ -40,6 +102,14 @@ class CrmLead(models.Model):
             partner_id.facebook_lead_id = lead_id.facebook_lead_id
 
         lead_id.partner_id = partner_id
+
+        # Team/user assignment
+        if form.team_id:
+            lead_id.team_id = form.team_id.id
+            lead_id.user_id = lead_id.team_id.get_new_user().id
+        else:
+            lead_id.team_id = False
+            lead_id.user_id = False
 
         return lead_id
 
