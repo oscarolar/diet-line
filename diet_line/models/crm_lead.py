@@ -103,6 +103,9 @@ class CrmLead(models.Model):
 
         lead_id.partner_id = partner_id
 
+        # Default priority for leads coming from Facebook is high
+        lead_id.priority = '2'
+
         # Team/user assignment
         if form.team_id:
             lead_id.team_id = form.team_id.id
