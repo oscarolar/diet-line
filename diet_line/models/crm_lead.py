@@ -20,12 +20,14 @@ class CrmTeam(models.Model):
     assign_method = fields.Selection([
         ('manual', 'Manually'),
         ('randomly', 'Randomly'),
-        ('balanced', 'Balanced')], string='Assignation Method',
+        ('balanced', 'Balanced'),
+        ('rounded', 'Rounded')], string='Assignation Method',
         default='manual', required=False,
         help='Automatic assignation method for new leads:\n'
              '\tManually: manual\n'
              '\tRandomly: randomly but everyone gets the same amount\n'
-             '\tBalanced: to the person with the least amount of open leads')
+             '\tBalanced: to the person with the least amount of open leads\n'
+             '\tRounded: to the person with the longest unassignment')
 
     @api.constrains('assign_method', 'member_ids')
     def _check_member_assignation(self):
@@ -42,12 +44,13 @@ class CrmTeam(models.Model):
     def get_new_user(self):
         self.ensure_one()
         new_user = self.env['res.users']
+        lead_obj = self.env['crm.lead']
         member_ids = sorted(self.member_ids.ids)
         if not member_ids:
             return new_user
         if self.assign_method == 'randomly':
             # randomly means new leads get uniformly distributed
-            previous_assigned_user = self.env['crm.lead'].search([
+            previous_assigned_user = lead_obj.search([
                 ('team_id', '=', self.id)],
                 order='create_date desc', limit=1).user_id
             # handle the case where the previous_assigned_user has left the
@@ -61,7 +64,7 @@ class CrmTeam(models.Model):
             else:
                 new_user = new_user.browse(member_ids[0])
         elif self.assign_method == 'balanced':
-            read_group_res = self.env['crm.lead'].read_group(
+            read_group_res = lead_obj.read_group(
                 ['|', ('active', '=', True), ('active', '=', False),
                     ('user_id', 'in', member_ids)], ['user_id'], ['user_id'])
             # add all the members in case a member has no leads
@@ -70,6 +73,17 @@ class CrmTeam(models.Model):
             count_dict.update(
                 (data['user_id'][0], data['user_id_count'])
                 for data in read_group_res)
+            new_user = new_user.browse(min(count_dict, key=count_dict.get))
+        elif self.assign_method == 'rounded':
+            # This condition assigns leads to the oldest unassigned user
+            count_dict = {}
+            for uid in member_ids:
+                count_dict[uid] = lead_obj.search(
+                    ['|', ('active', '=', True), ('active', '=', False),
+                     ('team_id', '=', self.id),
+                     ('user_id', '=', uid), ],
+                    order='id desc',
+                    limit=1).id or 0
             new_user = new_user.browse(min(count_dict, key=count_dict.get))
         return new_user
 
