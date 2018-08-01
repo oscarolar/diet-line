@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Diet Line App',
-    'version': '11.0.1.0.6',
+    'version': '11.0.1.0.7',
     "author": "Vauxoo",
     "license": "LGPL-3",
     'category': 'Hidden',
@@ -14,6 +14,9 @@
         'website',
         'mass_mailing',
         'marketing_automation',
+        'stock',
+        'purchase',
+        'mrp',
         # Secondary Modules
         'account_cash_basis_base_account',
         'l10n_mx',
