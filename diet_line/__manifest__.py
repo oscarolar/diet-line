@@ -15,8 +15,6 @@
         'mass_mailing',
         'marketing_automation',
         'stock',
-        'purchase',
-        'mrp',
         # Secondary Modules
         'account_cash_basis_base_account',
         'l10n_mx',
