@@ -44,7 +44,7 @@ env:
   - INCLUDE="diet_line" TESTS="1"
 
 virtualenv:
-  system_site_packages: true
+  system_site_packages: false
 
 install:
   - pip install lxml
