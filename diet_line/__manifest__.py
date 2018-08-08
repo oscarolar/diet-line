@@ -25,6 +25,7 @@
         'l10n_mx_edi_payment',
         # Modules from Facebook connector branch
         'crm_facebook_leads',
+        'website_multi_company_sale'
     ],
     'data': [
         'views/crm_lead_view.xml'
